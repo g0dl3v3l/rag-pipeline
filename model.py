@@ -13,8 +13,23 @@ def load_text_file(path):
         return f.read()
     pass
 
-# Step 2 - load_text_directory (not yet solved)
-# TODO: implement
+# Step 2 - load_text_directory
+def load_text_directory(directory):
+    # TODO: read every .txt file in `directory` and return their contents as a list of strings
+    dir_list = os.listdir(directory)
+   
+    dir_list.sort()
+
+    text_list =[]
+    for test_file in dir_list:
+        if test_file.endswith(".txt"):
+            try:
+                file_path = os.path.join(directory,test_file)
+                text_list.append(load_text_file(file_path))
+            except FileNotFoundError as e:
+                continue
+    return text_list
+    pass
 
 # Step 3 - extract_text_from_html (not yet solved)
 # TODO: implement
