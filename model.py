@@ -31,8 +31,37 @@ def load_text_directory(directory):
     return text_list
     pass
 
-# Step 3 - extract_text_from_html (not yet solved)
-# TODO: implement
+# Step 3 - extract_text_from_html
+from html.parser import HTMLParser
+
+
+class TextExtractor(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.is_script = False
+        self.text = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.is_script = True
+
+    def handle_endtag(self, tag):
+        if tag in ("script" , "style"):
+            self.is_script = False
+    
+
+    def handle_data(self, data):
+        if not self.is_script:
+            self.text.append(data)
+        
+
+
+def extract_text_from_html(html):
+    # TODO: strip HTML tags and return only the visible text content
+    htmp_parser = TextExtractor()
+    htmp_parser.feed(html)
+
+    return "".join(htmp_parser.text)
 
 # Step 4 - normalize_text (not yet solved)
 # TODO: implement
